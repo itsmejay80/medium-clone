@@ -5,6 +5,7 @@ import db from '../firebase.js'
 
 function Feeds(){
   const [posts,setPosts]=useState([])
+
   useEffect(()=>{
     db.collection("posts").onSnapshot((snapshot)=>{
       const data = snapshot.docs.map((doc) => ({
@@ -14,8 +15,7 @@ function Feeds(){
       console.log("All data in 'books' collection", data);
       setPosts(data)
     })
-  },[posts.title,posts.content,posts.likesCount])
-console.log(posts)
+  },[])
 
   return(
     <div className="feeds">

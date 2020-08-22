@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Card } from "react-bootstrap";
 import "./SinglePost.css";
+import db from '../firebase'
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownAltIcon from "@material-ui/icons/ThumbDownAlt";
 
 function SinglePost({title,content,lastUpdated,likesCount}) {
   const [likes, setLikes] = useState(likesCount);
+  
 
   return (
     <Card className="singlePost">

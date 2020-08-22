@@ -2,13 +2,26 @@ import React, { useState } from "react";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import ImageUploader from 'react-images-upload';
 // import {useImage} from 'react-image'
+// import {Button} from 'react-bootstrap'
+import Button from '@material-ui/core/Button';
+import db from '../firebase'
 import "./NewPost.css";
 
 const NewPost = () => {
   const [pictures,setPictures]=useState([])
-  console.log(pictures[0])
+  const [title,setTitle]=useState("")
+  const [content,setContent]=useState("")
+
+  const post =(e)=>{
+      db.collection("posts").add({
+        title:title,
+        content:content,
+        likesCount:0
+      })
+  }
   return ( 
     <div className="container">
+      <form action="/">
       <ImageUploader
                 withIcon={true}
                 buttonText='Choose images'
@@ -19,14 +32,21 @@ const NewPost = () => {
             />
       <img src={pictures.dataURL} alt=""/>
       <form action="">
-        <TextareaAutosize className="title" placeholder="Title" />
+        <TextareaAutosize value={title} onChange={(e)=>{setTitle(e.target.value)}} className="title" placeholder="Title" />
         <br />
         <br />
         <TextareaAutosize
+          value={content}
+          onChange={(e)=>{setContent(e.target.value)}}
           className="content"
           placeholder="Tell your story..."
         />
       </form>
+      <br/>
+      <br/>
+      <Button type='submit'  variant="contained" onClick={post} >Post</Button>
+      </form>
+      
     </div>
   );
 };
