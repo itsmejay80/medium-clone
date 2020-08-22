@@ -1,0 +1,16 @@
+.singlePost {
+  /* border-radius: 15px 50px 30px; */
+  border-radius: 25px;
+}
+
+.text-muted {
+  display: flex !important;
+  justify-items: space-between !important;
+  margin-top: 10px !important;
+}
+
+.postFooter {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
