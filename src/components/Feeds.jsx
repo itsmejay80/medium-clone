@@ -7,7 +7,6 @@ function Feeds(){
   const [posts,setPosts]=useState([])
   useEffect(()=>{
     db.collection("posts").onSnapshot((snapshot)=>{
-      // setPosts(snapshot.docs.map(doc=>doc.data))
       const data = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -15,7 +14,7 @@ function Feeds(){
       console.log("All data in 'books' collection", data);
       setPosts(data)
     })
-  },[posts.title])
+  },[posts.title,posts.content,posts.likesCount])
 console.log(posts)
 
   return(
@@ -27,7 +26,6 @@ console.log(posts)
         </li>
         ))          
           }
-    
         </ul>
       </div>
   )
