@@ -1,19 +1,26 @@
 import React, { useState,useEffect } from "react";
 import { Card } from "react-bootstrap";
 import "./SinglePost.css";
-import db from '../firebase'
+
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownAltIcon from "@material-ui/icons/ThumbDownAlt";
 
-function SinglePost({title,content,lastUpdated,likesCount}) {
+import { app } from "../firebase";
+
+const db = app.firestore();
+
+function SinglePost({title,id,content,lastUpdated,imageUrl,likesCount}) {
   const [likes, setLikes] = useState(likesCount);
   
-
+  useEffect(()=>{
+    const ref =db.collection("posts").doc(id);
+    ref.update({likesCount:likes})
+  },[likes])
   return (
     <Card className="singlePost">
       <Card.Img
         variant="top"
-        src="https://giphy.com/gifs/xT9IgHq4eDQKKCHqAo/html5"
+        src={imageUrl}
       />
       <Card.Body>
   <Card.Title>{title}</Card.Title>

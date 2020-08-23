@@ -1,36 +1,39 @@
 import React, { useState } from "react";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import ImageUploader from 'react-images-upload';
-// import {useImage} from 'react-image'
-// import {Button} from 'react-bootstrap'
 import Button from '@material-ui/core/Button';
-import db from '../firebase'
 import "./NewPost.css";
+import { app } from "../firebase";
+
+const db = app.firestore();
 
 const NewPost = () => {
-  const [pictures,setPictures]=useState([])
+  const [fileUrl, setFileUrl] = useState("");
   const [title,setTitle]=useState("")
   const [content,setContent]=useState("")
 
-  const post =(e)=>{
+  
+  const onFileChange = async (e) => {
+    const file = e.target.files[0];
+    const storageRef = app.storage().ref();
+    const fileRef = storageRef.child(file.name);
+    await fileRef.put(file);
+    setFileUrl(await fileRef.getDownloadURL());
+  };
+
+  const savePost = (e) =>{
       db.collection("posts").add({
         title:title,
         content:content,
-        likesCount:0
+        likesCount:0,
+        imageUrl:fileUrl
       })
+      setFileUrl("")
   }
   return ( 
     <div className="container">
-      <form action="/">
-      <ImageUploader
-                withIcon={true}
-                buttonText='Choose images'
-                withPreview ='true'
-                onChange={(picture)=>setPictures(pictures.concat(picture))}
-                imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                maxFileSize={5242880}
-            />
-      <img src={pictures.dataURL} alt=""/>
+      <input type="file" onChange={onFileChange} />
+      <form   action="/" >   
+      <img src={fileUrl} alt=""/>
       <form action="">
         <TextareaAutosize value={title} onChange={(e)=>{setTitle(e.target.value)}} className="title" placeholder="Title" />
         <br />
@@ -44,7 +47,8 @@ const NewPost = () => {
       </form>
       <br/>
       <br/>
-      <Button type='submit'  variant="contained" onClick={post} >Post</Button>
+      <Button type='submit' variant="contained" onClick={savePost} >Post</Button>
+      
       </form>
       
     </div>

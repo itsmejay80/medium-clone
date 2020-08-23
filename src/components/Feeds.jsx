@@ -1,7 +1,9 @@
 import React, { useState,useEffect } from "react";
 import SinglePost from "./SinglePost.jsx";
 import "./Feeds.css";
-import db from '../firebase.js'
+import { app } from "../firebase";
+
+const db = app.firestore();
 
 function Feeds(){
   const [posts,setPosts]=useState([])
@@ -22,7 +24,7 @@ function Feeds(){
         <ul>{
            posts.map(post=>(
           <li>
-          <SinglePost key={post.id} title={post.title} content={post.content} likesCount={post.likesCount}/>
+          <SinglePost key={post.id} id={post.id} title={post.title} content={post.content} imageUrl={post.imageUrl} likesCount={post.likesCount}/>
         </li>
         ))          
           }
