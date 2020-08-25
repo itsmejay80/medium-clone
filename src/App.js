@@ -4,18 +4,23 @@ import Feeds from "./components/Feeds.jsx";
 import NewPost from "./components/NewPost.jsx";
 import SignUp from "./components/SignUp.jsx";
 import SignIn from "./components/SingIn.jsx";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import disPost from "./components/Post.jsx";
+import { BrowserRouter as Router,Switch, Route } from "react-router-dom";
 
 function App() {
+  
   return (
     <Router>
-      <React.Fragment>
         <NavBar />
+        <div>
+        <Switch>
         <Route path="/" exact component={Feeds} />
+        <Route path="/post/:id" component = {disPost} /> 
         <Route path="/addPost" component={NewPost} />
         <Route path="/signUp" component={SignUp} />
         <Route path="/signIn" component={SignIn} />
-      </React.Fragment>
+        </Switch>
+        </div>
     </Router>
   );
 }
