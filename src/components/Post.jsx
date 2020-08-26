@@ -15,7 +15,7 @@ const  Post=()=> {
     let { id } = useParams();
     let [post,setPost]=useState("")
     const [postlikes, setPostLikes] = useState("");
-    
+   let likesValue
     useEffect( ()=>{
         db.collection('posts')
         .doc(id)
@@ -23,13 +23,10 @@ const  Post=()=> {
         .then(doc=>{
             post=doc.data()
             setPost(post)
+            setPostLikes(post.likesCount)
         })
 },[])
-    useEffect(()=>{
-        const ref =db.collection("posts").doc(id);
-        ref.update({likesCount: post.likesCount})
-        console.log('Updated Likes')
-    },[post.likesCount])
+    
     return(
         <div className="container" >
             <h1 className="title">{post.title}</h1>
@@ -38,12 +35,17 @@ const  Post=()=> {
             <p className="content">{post.content}</p>
             <div className="postFooter">
                 <ThumbUpIcon onClick={() => {
-                    post.likesCount =post.likesCount -1
+                    post.likesCount =post.likesCount +1;
+                    setPostLikes(post.likesCount)
+                    const ref =db.collection("posts").doc(id);
+                    ref.update({likesCount: post.likesCount});
                     }} />
-                <label > {post.likesCount} </label>
+                <label > {postlikes} </label>
                 <ThumbDownAltIcon onClick={ () => {
-                    post.likesCount =post.likesCount -1
-                    // setPostLikes(postlikes - 1)
+                    post.likesCount =post.likesCount -1;
+                    setPostLikes(post.likesCount)
+                    const ref =db.collection("posts").doc(id);
+                    ref.update({likesCount: post.likesCount});
                     }} />
             </div>
         </div>
