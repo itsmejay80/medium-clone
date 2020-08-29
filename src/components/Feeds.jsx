@@ -1,11 +1,15 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useContext } from "react";
 import SinglePost from "./SinglePost.jsx";
 import "./Feeds.css";
 import { app } from "../firebase";
 
+import {AuthContext} from "../Auth";
+
+
 const db = app.firestore();
 
 function Feeds(){
+  const {userName,userEmail}=useContext(AuthContext)
   const [posts,setPosts]=useState([])
 
   useEffect(()=>{
@@ -14,13 +18,13 @@ function Feeds(){
         id: doc.id,
         ...doc.data(),
       }));
-      console.log("All data in 'books' collection", data);
       setPosts(data)
     })
   },[])
 
   return(
     <div className="feeds">
+      <h3>Welcome {userName}</h3>
         <ul>{
            posts.map(post=>(
           <li>

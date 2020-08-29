@@ -30,7 +30,7 @@ const  Post=()=> {
     return(
         <div className="container" >
             <h1 className="title">{post.title}</h1>
-            <img src={post.imageUrl} alt=""/>
+            <img src={post.imageUrl} className="image" alt=""/>
             <br/>
             <p className="content">{post.content}</p>
             <div className="postFooter">

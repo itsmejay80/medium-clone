@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Button from '@material-ui/core/Button';
 import "./NewPost.css";
 import { app } from "../firebase";
+import {AuthContext} from "../Auth";
 
 const db = app.firestore();
 
 const NewPost = () => {
+  const {authuser,userName,userEmail}=useContext(AuthContext)
   const [fileUrl, setFileUrl] = useState("");
   const [title,setTitle]=useState("")
   const [content,setContent]=useState("")
@@ -20,14 +22,17 @@ const NewPost = () => {
     setFileUrl(await fileRef.getDownloadURL());
   };
 
-  const savePost = (e) =>{
-      db.collection("posts").add({
-        title:title,
-        content:content,
-        likesCount:0,
-        imageUrl:fileUrl
-      })
-      setFileUrl("")
+  const savePost =  async(e) =>{
+    let  data = await {
+      title:title,
+      content:content,
+      likesCount:0,
+      imageUrl:fileUrl,
+      name:userName,
+      emailId:userEmail
+    }
+    await db.collection("posts").add(data)
+    await setFileUrl("")
   }
   return ( 
     <div className="container">

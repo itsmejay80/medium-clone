@@ -1,9 +1,11 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect} from "react";
 import { Card } from "react-bootstrap";
 import "./SinglePost.css";
 
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownAltIcon from "@material-ui/icons/ThumbDownAlt";
+
+
 
 import { app } from "../firebase";
 
