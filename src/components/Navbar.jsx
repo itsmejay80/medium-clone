@@ -10,7 +10,7 @@ import {
 import React,{useContext} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import SignIn from "./SingIn";
+import SignIn from './SignIn';
 import {AuthContext} from "../Auth";
 import firebase from 'firebase'
 const NavBar = () => {
@@ -18,23 +18,37 @@ const NavBar = () => {
   let buttonTag= authuser ? "Log Out" : "Sign In"
    
   return ( <div>
-    <Navbar bg="light" variant="light">
+    <Navbar  bg="light" variant="light">
       <Navbar.Brand href="/">Medium Clone</Navbar.Brand>
       <Nav className="mr-auto">
         <Nav.Link href="/">Home</Nav.Link>
         <Nav.Link href="#features">Popular</Nav.Link>
         <Nav.Link href="#pricing">Latest</Nav.Link>
       </Nav>
-      <Form inline>
+      {/* <Form inline>
         <FormControl type="text" placeholder="Search" className="mr-sm-2" />
         <Button variant="outline-primary">Search</Button>
-      </Form>
-      <DropdownButton
+      </Form> */}
+      <Button style={{marginRight: '15px'}} onClick={()=>{
+        if(authuser){
+          firebase.auth().signOut()
+        }
+        else{
+          window.location.href = "/signIn";
+        }
+      }} variant={authuser ? "danger" :"Warning"}>{buttonTag}</Button>
+      <Dropdown>
+        <Dropdown.Toggle>
+           
+        </Dropdown.Toggle>
+      <Dropdown.Menu>
+      <Dropdown.Item href="/yourStories">Your Stories</Dropdown.Item>
+      <Dropdown.Item href="/addPost">New Story</Dropdown.Item>
+      </Dropdown.Menu>
+      </Dropdown>
+      {/* <DropdownButton
         id="dropdown-item-button"
         title={buttonTag}
-        // onClick={()=>{
-        //   firebase.auth().signOut()
-        // }}
       >
         <Dropdown.Item as="button">
           <a href="/addPost" style={{ textDecoration: "none" }}>
@@ -46,7 +60,7 @@ const NavBar = () => {
             Your Stories
           </a>
         </Dropdown.Item>
-      </DropdownButton>
+      </DropdownButton> */}
     </Navbar>
   </div> );
 }
