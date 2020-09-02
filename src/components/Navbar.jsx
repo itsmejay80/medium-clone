@@ -26,10 +26,7 @@ const NavBar = () => {
         <Nav.Link href="#features">Popular</Nav.Link>
         <Nav.Link href="#pricing">Latest</Nav.Link>
       </Nav>
-      {/* <Form inline>
-        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-        <Button variant="outline-primary">Search</Button>
-      </Form> */}
+      
       <Button style={{marginRight: '15px'}} onClick={()=>{
         if(authuser){
           firebase.auth().signOut()
@@ -48,21 +45,7 @@ const NavBar = () => {
       <Dropdown.Item href="/addPost">New Story</Dropdown.Item>
       </Dropdown.Menu>
       </Dropdown>
-      {/* <DropdownButton
-        id="dropdown-item-button"
-        title={buttonTag}
-      >
-        <Dropdown.Item as="button">
-          <a href="/addPost" style={{ textDecoration: "none" }}>
-            New Story
-          </a>
-        </Dropdown.Item>
-        <Dropdown.Item as="button">
-          <a href="/yourStories" style={{ textDecoration: "none" }}>
-            Your Stories
-          </a>
-        </Dropdown.Item>
-      </DropdownButton> */}
+    
     </Navbar>
   </div> );
 }

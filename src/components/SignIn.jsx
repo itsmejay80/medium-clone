@@ -1,6 +1,6 @@
 import React,{useEffect,useState,useContext} from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-// import {app} from '../firebase'
+
 import firebase from 'firebase'
 import {AuthContext} from "../Auth";
 
