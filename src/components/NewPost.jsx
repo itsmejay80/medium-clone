@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import "./NewPost.css";
 import { app } from "../firebase";
 import {AuthContext} from "../Auth";
+import Alert from 'react-bootstrap/Alert'
 
 const db = app.firestore();
 
@@ -35,6 +36,10 @@ const NewPost = () => {
     await setFileUrl("")
   }
   return ( 
+    <div>
+
+      {
+        authuser != '' ? (
     <div className="container">
       <input type="file" onChange={onFileChange} />
       <form   action="/" >   
@@ -52,11 +57,22 @@ const NewPost = () => {
       </form>
       <br/>
       <br/>
-      <Button type='submit' variant="contained" onClick={savePost} >Post</Button>
+      {
+        authuser != ' ' ? (<Button type='submit' variant="contained" onClick={savePost} >Post</Button>
+        ) :
+        ( <Alert variant ="danger"> Please Sign In!!! </Alert> )
+      }
       
       </form>
-      
     </div>
+        )
+        : (
+          window.location.href = "/signIn"
+        )
+
+      }
+</div>
+
   );
 };
 

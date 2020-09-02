@@ -7,14 +7,15 @@ import {
   Dropdown,
   DropdownButton,
 } from "react-bootstrap";
-import React,{useContext} from "react";
+import React,{useContext,useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import SignIn from './SignIn';
 import {AuthContext} from "../Auth";
 import firebase from 'firebase'
+import { auth } from "firebase-admin";
 const NavBar = () => {
-  const {authuser}=useContext(AuthContext) 
+  const {authuser,setAuthUser}=useContext(AuthContext) 
   let buttonTag= authuser ? "Log Out" : "Sign In"
    
   return ( <div>
@@ -32,6 +33,7 @@ const NavBar = () => {
       <Button style={{marginRight: '15px'}} onClick={()=>{
         if(authuser){
           firebase.auth().signOut()
+          setAuthUser(' ')
         }
         else{
           window.location.href = "/signIn";
